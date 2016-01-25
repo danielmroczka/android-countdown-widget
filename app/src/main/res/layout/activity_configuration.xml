@@ -4,14 +4,26 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
     <DatePicker
-        android:id="@+id/datepicker"
+        android:id="@+id/datePicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:calendarViewShown="false"></DatePicker>
+
+    <CheckBox
+        android:id="@+id/checkBoxTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:calendarViewShown="false"
-        >
+        android:checked="true"
+        android:text="Include time" />
 
-    </DatePicker>
+    <TimePicker
+        android:id="@+id/timePicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </TimePicker>
 
     <Button
         android:id="@+id/okButton"
