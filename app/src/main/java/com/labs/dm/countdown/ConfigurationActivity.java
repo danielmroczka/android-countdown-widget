@@ -16,6 +16,8 @@ import android.widget.TimePicker;
 
 import com.labs.dm.com.countdown.R;
 
+import java.util.Date;
+
 import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID;
 import static android.appwidget.AppWidgetManager.INVALID_APPWIDGET_ID;
 
@@ -81,6 +83,7 @@ public class ConfigurationActivity extends Activity {
             CheckBox checkBox = (CheckBox) findViewById(R.id.checkBoxTime);
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            prefs.edit().putLong("widget." + mAppWidgetId + ".start", new Date().getTime()).apply();
             prefs.edit().putInt("widget." + mAppWidgetId + ".day", date.getDayOfMonth()).apply();
             prefs.edit().putInt("widget." + mAppWidgetId + ".month", date.getMonth()).apply();
             prefs.edit().putInt("widget." + mAppWidgetId + ".year", date.getYear()).apply();

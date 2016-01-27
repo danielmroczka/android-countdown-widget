@@ -8,11 +8,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import com.labs.dm.com.countdown.R;
 
 import java.util.Calendar;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -20,47 +22,48 @@ import java.util.concurrent.TimeUnit;
  */
 public class CountdownWidget extends AppWidgetProvider {
 
+    private Calendar getEndDate(Context context, int mAppWidgetId) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        int day = prefs.getInt(getKey(mAppWidgetId, "day"), 0);
+        int month = prefs.getInt(getKey(mAppWidgetId, "month"), 0);
+        int year = prefs.getInt(getKey(mAppWidgetId, "year"), 0);
+        int hour = prefs.getInt(getKey(mAppWidgetId, "hour"), 0);
+        int minute = prefs.getInt(getKey(mAppWidgetId, "minute"), 0);
+        Calendar c = Calendar.getInstance();
+
+        c.set(year, month, day, hour, minute, 0);
+        return c;
+    }
+
+    private String getKey(int widgetId, String key) {
+        return "widget." + widgetId + "." + key;
+    }
+
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         ComponentName thisWidget = new ComponentName(context, CountdownWidget.class);
         int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
         for (int mAppWidgetId : allWidgetIds) {
-
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.countdown_widget);
-
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-            int day = prefs.getInt("widget." + mAppWidgetId + ".day", 0);
-            int month = prefs.getInt("widget." + mAppWidgetId + ".month", 0);
-            int year = prefs.getInt("widget." + mAppWidgetId + ".year", 0);
-
-            int hour = prefs.getInt("widget." + mAppWidgetId + ".hour", 0);
-            int minute = prefs.getInt("widget." + mAppWidgetId + ".minute", 0);
-
-            Calendar now = Calendar.getInstance();
-            Calendar c = Calendar.getInstance();
-
-            c.set(year, month, day, hour, minute, 0);
-            long diff = c.getTimeInMillis() - now.getTimeInMillis();
+            long now = Calendar.getInstance().getTimeInMillis();
+            long endDate = getEndDate(context, mAppWidgetId).getTimeInMillis();
+            long diff = endDate - now;
             long days = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
             diff = diff - (days * 86400000L);
             long hours = TimeUnit.HOURS.convert(diff, TimeUnit.MILLISECONDS);
-            CharSequence widgetText = (String.valueOf(days));
+            long start = prefs.getLong(getKey(mAppWidgetId, "start"), 0);
 
-            remoteViews.setTextViewText(R.id.display, widgetText);
+            remoteViews.setTextViewText(R.id.displayDay, String.valueOf(days));
+            remoteViews.setTextViewText(R.id.displayHour, String.valueOf(hours));
 
-            if (hours > 0) {
-                remoteViews.setTextViewText(R.id.display2, String.valueOf(hours));
-                remoteViews.setTextViewText(R.id.lblhours, "hours");
-            } else {
-                remoteViews.setTextViewText(R.id.display2, "");
-                remoteViews.setTextViewText(R.id.lblhours, "");
-            }
+            int progress = (int) (100 * (now - start) / (endDate - start));
+            remoteViews.setInt(R.id.progressBar, "setProgress", progress);
+            remoteViews.setViewVisibility(R.id.layoutHour, hours > 0 ? View.VISIBLE : View.GONE);
 
             Intent intent = new Intent(context, CountdownWidget.class);
-
             intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-
             PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             remoteViews.setOnClickPendingIntent(R.id.widgetLayout, pendingIntent);
             appWidgetManager.updateAppWidget(mAppWidgetId, remoteViews);
@@ -71,11 +74,11 @@ public class CountdownWidget extends AppWidgetProvider {
     public void onDeleted(Context context, int[] appWidgetIds) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         for (int mAppWidgetId : appWidgetIds) {
-            prefs.edit().remove("widget." + mAppWidgetId + ".day").commit();
-            prefs.edit().remove("widget." + mAppWidgetId + ".month").commit();
-            prefs.edit().remove("widget." + mAppWidgetId + ".year").commit();
-            prefs.edit().remove("widget." + mAppWidgetId + ".hour").commit();
-            prefs.edit().remove("widget." + mAppWidgetId + ".minute").commit();
+            for (Map.Entry<String, ?> entry : prefs.getAll().entrySet()) {
+                if (entry.getKey().startsWith("widget." + mAppWidgetId + ".")) {
+                    prefs.edit().remove(entry.getKey()).commit();
+                }
+            }
         }
         super.onDeleted(context, appWidgetIds);
     }
