@@ -26,7 +26,6 @@
         android:id="@+id/okButton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:text="ADD WIDGET"
         android:textColor="#FFFFFF" />
 </LinearLayout>

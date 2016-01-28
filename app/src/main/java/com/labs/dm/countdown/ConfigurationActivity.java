@@ -14,9 +14,7 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
-import com.labs.dm.com.countdown.R;
-
-import java.util.Date;
+import java.util.Calendar;
 
 import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID;
 import static android.appwidget.AppWidgetManager.INVALID_APPWIDGET_ID;
@@ -25,8 +23,6 @@ import static android.appwidget.AppWidgetManager.INVALID_APPWIDGET_ID;
  * Created by daniel on 2016-01-24.
  */
 public class ConfigurationActivity extends Activity {
-
-    private int mAppWidgetId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +63,7 @@ public class ConfigurationActivity extends Activity {
 
     private void showAppWidget() {
 
-        mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
+        int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if (extras != null) {
@@ -83,16 +79,19 @@ public class ConfigurationActivity extends Activity {
             CheckBox checkBox = (CheckBox) findViewById(R.id.checkBoxTime);
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            prefs.edit().putLong("widget." + mAppWidgetId + ".start", new Date().getTime()).apply();
-            prefs.edit().putInt("widget." + mAppWidgetId + ".day", date.getDayOfMonth()).apply();
-            prefs.edit().putInt("widget." + mAppWidgetId + ".month", date.getMonth()).apply();
-            prefs.edit().putInt("widget." + mAppWidgetId + ".year", date.getYear()).apply();
+
+            Calendar end = Calendar.getInstance();
 
             if (checkBox.isChecked()) {
                 time.clearFocus();
-                prefs.edit().putInt("widget." + mAppWidgetId + ".hour", time.getCurrentHour()).apply();
-                prefs.edit().putInt("widget." + mAppWidgetId + ".minute", time.getCurrentMinute()).apply();
+                end.set(date.getYear(), date.getMonth(), date.getDayOfMonth(), time.getCurrentHour(), time.getCurrentMinute(), 0);
+            } else {
+                end.set(date.getYear(), date.getMonth(), date.getDayOfMonth());
             }
+            Log.i("addend", String.valueOf(end.getTimeInMillis()));
+
+            prefs.edit().putLong("widget." + mAppWidgetId + ".end", end.getTimeInMillis()).apply();
+            prefs.edit().putBoolean("widget." + mAppWidgetId + ".onlyDays", !checkBox.isChecked()).apply();
 
             Intent startService = new Intent(ConfigurationActivity.this, CountdownWidget.class);
             startService.putExtra(EXTRA_APPWIDGET_ID, mAppWidgetId);

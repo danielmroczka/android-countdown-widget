@@ -10,7 +10,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "countdown.labs.dm.com.countdown"
+        applicationId "com.labs.dm.countdown"
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
@@ -25,7 +25,6 @@ android {
         }
         debug {
             debuggable true
-            testCoverageEnabled = true
         }
     }
 }
