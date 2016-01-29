@@ -52,13 +52,9 @@ public class ConfigurationActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-                handleOkButton();
+                showAppWidget();
             }
         });
-    }
-
-    private void handleOkButton() {
-        showAppWidget();
     }
 
     private void showAppWidget() {
@@ -81,6 +77,7 @@ public class ConfigurationActivity extends Activity {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
             Calendar end = Calendar.getInstance();
+            prefs.edit().putLong("widget." + mAppWidgetId + ".start", end.getTimeInMillis()).apply();
 
             if (checkBox.isChecked()) {
                 time.clearFocus();
@@ -93,12 +90,14 @@ public class ConfigurationActivity extends Activity {
             prefs.edit().putLong("widget." + mAppWidgetId + ".end", end.getTimeInMillis()).apply();
             prefs.edit().putBoolean("widget." + mAppWidgetId + ".onlyDays", !checkBox.isChecked()).apply();
 
+
             Intent startService = new Intent(ConfigurationActivity.this, CountdownWidget.class);
             startService.putExtra(EXTRA_APPWIDGET_ID, mAppWidgetId);
             startService.setAction("FROM CONFIGURATION ACTIVITY");
             setResult(RESULT_OK, startService);
             startService(startService);
             finish();
+
         }
 
         if (mAppWidgetId == INVALID_APPWIDGET_ID) {

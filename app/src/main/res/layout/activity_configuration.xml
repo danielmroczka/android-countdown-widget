@@ -2,30 +2,55 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    style="@style/AppTheme">
 
-    <DatePicker
-        android:id="@+id/datePicker"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:calendarViewShown="false" />
-
-    <CheckBox
-        android:id="@+id/checkBoxTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checked="true"
-        android:text="Include time" />
-
-    <TimePicker
-        android:id="@+id/timePicker"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/okButton"
+    <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="ADD WIDGET"
-        android:textColor="#FFFFFF" />
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name of the event:"
+                android:labelFor="@+id/name" />
+
+            <EditText
+                android:id="@+id/name"
+                android:maxLength="20"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <DatePicker
+                android:id="@+id/datePicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:calendarViewShown="false" />
+
+            <CheckBox
+                android:id="@+id/checkBoxTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Include time" />
+
+            <TimePicker
+                android:id="@+id/timePicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/okButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="ADD WIDGET"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

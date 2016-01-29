@@ -40,19 +40,22 @@ public class CountdownWidget extends AppWidgetProvider {
             long now = Calendar.getInstance().getTimeInMillis();
             long endDate = getEndDate(context, mAppWidgetId);
 
-            Log.i("end", String.valueOf(endDate));
+            if (endDate > 0) {
+                Log.i("end", String.valueOf(endDate));
 
-            TimeCalculator.TimeContainer container = tc.calculate(endDate, now, 0);
-            long days = container.days;
-            long hours = container.hours;
-            long start = prefs.getLong(getKey(mAppWidgetId, "start"), 0);
+                TimeCalculator.TimeContainer container = tc.calculate(endDate, now, 0);
+                long days = container.days;
+                long hours = container.hours;
+                long start = prefs.getLong(getKey(mAppWidgetId, "start"), 0);
 
-            remoteViews.setTextViewText(R.id.displayDay, String.valueOf(days));
-            remoteViews.setTextViewText(R.id.displayHour, String.valueOf(hours));
+                remoteViews.setTextViewText(R.id.displayDay, String.valueOf(days));
+                remoteViews.setTextViewText(R.id.displayHour, String.valueOf(hours));
 
-            int progress = (endDate - start) > 0 ? (int) (100 * (now - start) / (endDate - start)) : 100;
-            remoteViews.setInt(R.id.progressBar, "setProgress", progress);
-            remoteViews.setViewVisibility(R.id.layoutHour, prefs.getBoolean(getKey(mAppWidgetId, "onlyDays"), false) ? View.GONE : View.VISIBLE);
+                int progress = (endDate - start) > 0 ? (int) (100 * (now - start) / (endDate - start)) : 100;
+                remoteViews.setInt(R.id.progressBar, "setProgress", progress);
+                remoteViews.setViewVisibility(R.id.layoutHour, prefs.getBoolean(getKey(mAppWidgetId, "onlyDays"), false) ? View.GONE : View.VISIBLE);
+
+            }
 
             Intent intent = new Intent(context, CountdownWidget.class);
             intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
