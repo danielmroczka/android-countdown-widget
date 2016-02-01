@@ -50,7 +50,9 @@ public class CountdownWidget extends AppWidgetProvider {
 
                 remoteViews.setTextViewText(R.id.displayDay, String.valueOf(days));
                 remoteViews.setTextViewText(R.id.displayHour, String.valueOf(hours));
-
+                remoteViews.setViewVisibility(R.id.chkProgressBar, prefs.getBoolean(getKey(mAppWidgetId, "showProgressBar"), false) ? View.VISIBLE : View.GONE);
+                remoteViews.setViewVisibility(R.id.layoutEvent, prefs.getString(getKey(mAppWidgetId, "eventName"), "").length() > 0 ? View.VISIBLE : View.GONE);
+                remoteViews.setTextViewText(R.id.displayEventName, prefs.getString(getKey(mAppWidgetId, "eventName"), ""));
                 int progress = (endDate - start) > 0 ? (int) (100 * (now - start) / (endDate - start)) : 100;
                 remoteViews.setInt(R.id.progressBar, "setProgress", progress);
                 remoteViews.setViewVisibility(R.id.layoutHour, prefs.getBoolean(getKey(mAppWidgetId, "onlyDays"), false) ? View.GONE : View.VISIBLE);

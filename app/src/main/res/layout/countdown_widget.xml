@@ -8,6 +8,24 @@
     android:padding="4dp">
 
     <LinearLayout
+        android:id="@+id/layoutEvent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/displayEventName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal|right"
+            android:contentDescription="@string/appwidget_text"
+            android:gravity="bottom"
+            android:text="@string/appwidget_text"
+            android:textColor="@android:color/background_light"
+            android:textSize="10sp"
+            android:textStyle="normal" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/layoutDay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
@@ -18,24 +36,24 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal|right"
             android:contentDescription="@string/appwidget_text"
+            android:gravity="bottom|right"
             android:text="@string/appwidget_text"
             android:textColor="#ffffff"
             android:textSize="22sp"
-            android:textStyle="bold|italic"
-            android:gravity="bottom|right" />
+            android:textStyle="bold|italic" />
 
         <TextView
             android:id="@+id/lblday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left|bottom"
-            android:layout_margin="1dp"
             android:contentDescription="@string/appwidget_text"
+            android:gravity="left|bottom"
             android:text="@string/d"
             android:textColor="#ffffff"
             android:textSize="9sp"
             android:textStyle="italic"
-            android:gravity="left|bottom" />
+            android:layout_marginLeft="1dp" />
 
     </LinearLayout>
 
@@ -51,32 +69,32 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal|right"
             android:contentDescription="@string/appwidget_text"
+            android:gravity="bottom|right"
             android:text="@string/appwidget_text"
             android:textColor="#ffffff"
             android:textSize="18sp"
-            android:textStyle="bold|italic"
-            android:gravity="bottom|right" />
+            android:textStyle="bold|italic" />
 
         <TextView
             android:id="@+id/lblhours"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_margin="1dp"
             android:contentDescription="@string/appwidget_text"
+            android:gravity="left|bottom"
             android:text="@string/h"
             android:textColor="#ffffff"
             android:textSize="8sp"
             android:textStyle="italic"
-            android:gravity="left|bottom" />
+            android:layout_marginLeft="1dp" />
     </LinearLayout>
 
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:gravity="bottom"
-        android:layout_height="wrap_content">
+        android:gravity="bottom">
 
         <ProgressBar
             android:id="@+id/progressBar"

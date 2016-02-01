@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/AppTheme"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    style="@style/AppTheme">
+    android:orientation="vertical">
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -17,14 +17,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Name of the event:"
-                android:labelFor="@+id/name" />
+                android:labelFor="@+id/name"
+                android:text="Name of the event:" />
 
             <EditText
-                android:id="@+id/name"
-                android:maxLength="20"
+                android:id="@+id/eventName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:maxLength="20" />
 
             <DatePicker
                 android:id="@+id/datePicker"
@@ -43,6 +43,13 @@
                 android:id="@+id/timePicker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Show progress bar"
+                android:id="@+id/chkProgressBar"
+                android:checked="false" />
 
             <Button
                 android:id="@+id/okButton"

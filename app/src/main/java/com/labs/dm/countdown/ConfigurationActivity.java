@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TimePicker;
 
 import java.util.Calendar;
@@ -47,6 +48,8 @@ public class ConfigurationActivity extends Activity {
         });
         checkBox.setChecked(false);
 
+        date.requestFocus();
+
         Button okButton = (Button) findViewById(R.id.okButton);
         okButton.setOnClickListener(new View.OnClickListener() {
 
@@ -73,7 +76,8 @@ public class ConfigurationActivity extends Activity {
             DatePicker date = (DatePicker) findViewById(R.id.datePicker);
             TimePicker time = (TimePicker) findViewById(R.id.timePicker);
             CheckBox checkBox = (CheckBox) findViewById(R.id.checkBoxTime);
-
+            EditText eventName = (EditText) findViewById(R.id.eventName);
+            CheckBox checkProgressBar = (CheckBox) findViewById(R.id.chkProgressBar);
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
             Calendar end = Calendar.getInstance();
@@ -89,7 +93,8 @@ public class ConfigurationActivity extends Activity {
 
             prefs.edit().putLong("widget." + mAppWidgetId + ".end", end.getTimeInMillis()).apply();
             prefs.edit().putBoolean("widget." + mAppWidgetId + ".onlyDays", !checkBox.isChecked()).apply();
-
+            prefs.edit().putBoolean("widget." + mAppWidgetId + ".showProgressBar", !checkProgressBar.isChecked()).apply();
+            prefs.edit().putString("widget." + mAppWidgetId + ".eventName", eventName.getText().toString()).apply();
 
             Intent startService = new Intent(ConfigurationActivity.this, CountdownWidget.class);
             startService.putExtra(EXTRA_APPWIDGET_ID, mAppWidgetId);
