@@ -19,6 +19,7 @@
             android:layout_gravity="bottom|center_horizontal|right"
             android:contentDescription="@string/appwidget_text"
             android:gravity="bottom"
+            android:maxLines="2"
             android:text="@string/appwidget_text"
             android:textColor="@android:color/background_light"
             android:textSize="10sp"
@@ -47,13 +48,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left|bottom"
+            android:layout_marginLeft="1dp"
             android:contentDescription="@string/appwidget_text"
             android:gravity="left|bottom"
             android:text="@string/d"
             android:textColor="#ffffff"
             android:textSize="9sp"
-            android:textStyle="italic"
-            android:layout_marginLeft="1dp" />
+            android:textStyle="italic" />
 
     </LinearLayout>
 
@@ -80,13 +81,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:layout_marginLeft="1dp"
             android:contentDescription="@string/appwidget_text"
             android:gravity="left|bottom"
             android:text="@string/h"
             android:textColor="#ffffff"
             android:textSize="8sp"
-            android:textStyle="italic"
-            android:layout_marginLeft="1dp" />
+            android:textStyle="italic" />
     </LinearLayout>
 
 
