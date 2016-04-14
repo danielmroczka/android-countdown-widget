@@ -1,11 +1,14 @@
 package com.labs.dm.countdown;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,7 +26,7 @@ import static android.appwidget.AppWidgetManager.INVALID_APPWIDGET_ID;
 /**
  * Created by daniel on 2016-01-24.
  */
-public class ConfigurationActivity extends Activity {
+public class ConfigurationActivity extends FragmentActivity implements ActionBar.TabListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +112,21 @@ public class ConfigurationActivity extends Activity {
             Log.e("Invalid app widget id", "Invalid app widget id");
             finish();
         }
+
+    }
+
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+
+    }
+
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
 
     }
 }
