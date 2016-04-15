@@ -13,13 +13,13 @@ android {
         release
     }
 
-    compileSdkVersion 21
+    compileSdkVersion 22
     buildToolsVersion '21.1.2'
 
     defaultConfig {
         applicationId "com.labs.dm.countdown"
         minSdkVersion 16
-        targetSdkVersion 21
+        targetSdkVersion 22
         versionCode 1
         versionName "0.0.1"
     }
@@ -44,11 +44,33 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:+'
+    compile 'com.android.support:appcompat-v7:22.2.1'
+}
+
+def Properties props = new Properties()
+def propFile = new File(System.properties['user.home'] + '/.gradle/gradle.properties')
+
+if (propFile.canRead()) {
+    props.load(new FileInputStream(propFile))
+
+    if (props != null && props.containsKey('RELEASE_STORE_FILE') && props.containsKey('RELEASE_STORE_PASSWORD') &&
+            props.containsKey('RELEASE_KEY_ALIAS') && props.containsKey('RELEASE_KEY_PASSWORD')) {
+        println 'gradle.properties found at:  ' + propFile
+        android.signingConfigs.release.storeFile = file(System.properties['user.home'] + '/.gradle/' + props['RELEASE_STORE_FILE'])
+        android.signingConfigs.release.storePassword = props['RELEASE_STORE_PASSWORD']
+        android.signingConfigs.release.keyAlias = props['RELEASE_KEY_ALIAS']
+        android.signingConfigs.release.keyPassword = props['RELEASE_KEY_PASSWORD']
+    } else {
+        println 'gradle.properties found but some entries are missing'
+        android.buildTypes.release.signingConfig = null
+    }
+} else {
+    println 'gradle.properties not found'
+    android.buildTypes.release.signingConfig = null
 }
 
 ext {
-    ANDROID_BUILD_MIN_SDK_VERSION = 10
+    ANDROID_BUILD_MIN_SDK_VERSION = 16
     ANDROID_BUILD_TARGET_SDK_VERSION = 22
     ANDROID_BUILD_TOOLS_VERSION = '22.0.1'
     ANDROID_BUILD_SDK_VERSION = 22

@@ -7,10 +7,6 @@ import java.util.concurrent.TimeUnit;
  */
 public class TimeCalculator {
 
-    public final static int HOURS = 0;
-    public final static int DAYS = 1;
-    public final static int WEEKS = 2;
-
     class TimeContainer {
         public TimeContainer(long hours, long days, long weeks) {
             this.hours = hours;
@@ -23,7 +19,7 @@ public class TimeCalculator {
         long weeks;
     }
 
-    public TimeContainer calculate(long future, long now, int mode) {
+    public TimeContainer calculate(long future, long now) {
         if (future < now) {
             //throw new IllegalArgumentException("Parameter future is older than present!");
         }

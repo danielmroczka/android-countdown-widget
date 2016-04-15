@@ -43,7 +43,7 @@ public class CountdownWidget extends AppWidgetProvider {
             if (endDate > 0) {
                 Log.i("end", String.valueOf(endDate));
 
-                TimeCalculator.TimeContainer container = tc.calculate(endDate, now, 0);
+                TimeCalculator.TimeContainer container = tc.calculate(endDate, now);
                 long days = container.days;
                 long hours = container.hours;
                 long start = prefs.getLong(getKey(mAppWidgetId, "start"), 0);
